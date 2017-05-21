@@ -127,7 +127,7 @@ def combine_results(results,this_result,groupings):
     """ Combine engagements data from different date ranges or Tweets """
     
     # start by combining results defined in the groupings
-    for grouping_name,grouping in groupings.items():
+    for grouping_name,grouping in list(groupings.items()):
         
         if grouping_name not in results:
             results[grouping_name] = {}
@@ -141,7 +141,7 @@ def combine_results(results,this_result,groupings):
                 if level_1_key not in results[grouping_name]:
                     results[grouping_name][level_1_key] = {}
                 
-                for engagement,count in this_result[grouping_name][level_1_key].items():
+                for engagement,count in list(this_result[grouping_name][level_1_key].items()):
                     if engagement in results[grouping_name][level_1_key]:
                         results[grouping_name][level_1_key][engagement] += int(count)
                     else:
@@ -154,17 +154,17 @@ def combine_results(results,this_result,groupings):
                 if level_1_key not in results[grouping_name]:
                     results[grouping_name][level_1_key] = {}
                 
-                for engagement,date_data in this_result[grouping_name][level_1_key].items(): 
+                for engagement,date_data in list(this_result[grouping_name][level_1_key].items()): 
                     if engagement not in results[grouping_name][level_1_key]:
                         results[grouping_name][level_1_key][engagement] = {}
-                    for date,count in this_result[grouping_name][level_1_key][engagement].items():
+                    for date,count in list(this_result[grouping_name][level_1_key][engagement].items()):
                         if date in results[grouping_name][level_1_key][engagement]:
                             results[grouping_name][level_1_key][engagement][date] += int(count)
                         else:
                             results[grouping_name][level_1_key][engagement][date] = int(count)
     
     # do keys not in groupings, such as errors
-    for other_key in this_result.keys():
+    for other_key in list(this_result.keys()):
         if other_key in groupings:
             continue
         if other_key in ['start','end']:
